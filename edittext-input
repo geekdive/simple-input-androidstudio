@@ -1,0 +1,73 @@
+EditText & Button
+
+Activity 1: Memasukan Data dan Melakukan Aksi Mengirim ke Activity 2
+Widget:
+            <EditText
+            android:layout_marginTop="30dp"
+            android:id="@+id/idMasukan"
+            android:layout_weight="1"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:hint="Masukan Data"/>
+            
+            <Button
+            android:layout_marginTop="30dp"
+            android:id="@+id/btnKirim"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/idMasukan"
+            android:text="Kirim Masukan"/>
+            
+Java:
+//Panggil Methode
+initial();
+
+//Buat Variable untuk Widget
+EditText inputData;
+Button btKirim;
+        
+        //Method Button
+        btKirim.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                if (inputData.length() == 0)
+                {
+                    Toast.makeText(getApplicationContext(), "Maaf, Inputan Nama Masih Kosong!", Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                    Intent i = new Intent(getApplicationContext(), resultActivity.class);
+
+                    i.putExtra("namaLengkap", inputData.getText().toString());
+                    startActivity(i);
+                }
+            }
+        });
+
+Create Methode:
+private void initial()
+{
+    inputData = (EditText)findViewById(R.id.idMasukan);
+    btKirim = (Button)findViewById(R.id.btnKirim);
+}
+
+
+Activity 2: Menampung Inputan data yang dibawa dari Activity 1
+Widget:
+        <TextView
+        android:id="@+id/idNama"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Loading...."
+        android:textSize="20dp"/>
+
+Sourcecode onCreate Instance:
+        Intent i = getIntent();
+        String masukanNama = i.getStringExtra("namaLengkap");
+
+        TextView txtView = (TextView)findViewById(R.id.idNama);
+
+        txtView.setText(masukanNama);
